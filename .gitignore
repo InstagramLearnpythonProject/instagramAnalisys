@@ -3,3 +3,6 @@ instascript.py
 InstaPy
 instaParser
 settings.py
+negative.csv
+positive.csv
+textanalisys.py
