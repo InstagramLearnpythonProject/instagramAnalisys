@@ -22,7 +22,7 @@ def find_post(bot, update):
     bot.send_message(chat_id=update.message.chat_id, text = 'Введите хэштег')
     # Получаем вводные данные
     hashtag = input(getattr ("Введите хештег (без #): "))
-    amount = int(input(getattr("Введите количество публикаций по хештегу: ")))
+    amount = int(input(getattr ("Введите количество публикаций по хештегу: ")))
     print(' ')
     # Получаем список хештегов
     h = bot.get_total_hashtag_medias(hashtag, amount=amount, filtration=False)
