@@ -26,8 +26,20 @@ def find_post(bot, update):
     print(' ')
     # Получаем список хештегов
     h = bot.get_total_hashtag_medias(hashtag, amount=amount, filtration=False)
-    # Удаляем повторяющиеся елементы
+    # Удаляем повторяющиеся элементы
     posts = list(set(h))
+
+def sent(bot, update):
+    data = []
+    for i in open("hashtags.txt"):
+        data.append(i)
+    print(data)
+
+    for i in range(len(data)):
+        
+
+
+    
 
 def main():
     mybot = Updater("650028034:AAH-dqfS_nkiSA7DTLzpSihJKRz8aX3eGJg", request_kwargs=PROXY)
