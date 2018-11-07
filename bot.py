@@ -18,14 +18,16 @@ def greet_user(bot, update):
     logging.info(text)
     update.message.reply_text(text)
 
-def talk_to_me(bot,update):
-    user_text = "Привет {}! Ты написал: {}".format(update.message.chat.first_name, update.message.text) 
-    logging.info("User: %s, Chat id: %s, Message: %s", update.message.chat.username, 
-                    update.message.chat.id, update.message.text)
-    update.message.reply_text(user_text)
-
-def 
-
+def find_post(bot, update):
+    bot.send_message(chat_id=update.message.chat_id, text = 'Введите хэштег')
+    # Получаем вводные данные
+    hashtag = input(getattr ("Введите хештег (без #): "))
+    amount = int(input(getattr ("Введите количество публикаций по хештегу: ")))
+    print(' ')
+    # Получаем список хештегов
+    h = bot.get_total_hashtag_medias(hashtag, amount=amount, filtration=False)
+    # Удаляем повторяющиеся елементы
+    posts = list(set(h))
 
 def main():
     mybot = Updater("650028034:AAH-dqfS_nkiSA7DTLzpSihJKRz8aX3eGJg", request_kwargs=PROXY)
