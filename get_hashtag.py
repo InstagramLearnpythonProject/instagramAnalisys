@@ -10,8 +10,8 @@ def preprocess_text(text):
     text = re.sub('@[^\s]+', 'USER', text)
     text = re.sub('#[^\s]+', 'TAG', text)
     text = re.sub('[^a-zA-Zа-яА-Я1-9]+', ' ', text)
-    text = re.sub('[a-zA-Z]+', ' ', text)
-    text = re.sub(' +', ' ', text)
+    text = re.sub('[a-z]+', ' ', text)
+    text = re.sub('\n', ' ', text)
     return text.strip()
 
 agent = Agent()
@@ -26,16 +26,17 @@ def get_comments_by_tag(word, numberOfPost):
     counter = 0
     for media in medias[0]:
         post = agent.update(obj=Media(media))#get post with comments
-        if post["edge_media_to_comment"]["edges"] != []:
+        comments = ""
+        for t in post["edge_media_to_comment"]["edges"]:
+            comment = str(t["node"]["text"]) #create str from 
+            comment = preprocess_text(comment)
+            if comment != "":
+                comments = (comment + "\n")
+        if comments != "":
             counter += 1
-            comments = ""
-            with open("{}/{}.txt".format(word, media), "w", encoding = "utf-8", ) as f:
-                for t in post["edge_media_to_comment"]["edges"]:
-                    comment = str(t["node"]["text"]) #create str from 
-                    comment = preprocess_text(comment)
-                    comments = (comment + "\n")
-                    f.write(comments)
+            with open("{}/{}.txt".format(word, media), "w", encoding = "utf-8", )as f:
+                f.write(comments)
     return counter
 
-get_comments_by_tag("гальванопластика", 5)
-print(get_comments_by_tag("гальванопластика", 5))
+get_comments_by_tag("гальваника", 5)
+print(get_comments_by_tag("гальваника", 5))
