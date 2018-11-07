@@ -1,0 +1,5 @@
+root - INFO - Обожемой, бот кому-то понадобился!
+root - INFO - Вызван /start
+root - INFO - User: sleipnear, Chat id: 189468337, Message: 22
+telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+telegram.ext.updater - WARNING - Exiting immediately!
