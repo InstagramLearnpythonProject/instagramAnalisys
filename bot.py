@@ -24,6 +24,8 @@ def talk_to_me(bot,update):
                     update.message.chat.id, update.message.text)
     update.message.reply_text(user_text)
 
+def 
+
 
 def main():
     mybot = Updater("650028034:AAH-dqfS_nkiSA7DTLzpSihJKRz8aX3eGJg", request_kwargs=PROXY)
