@@ -25,23 +25,19 @@ def get_comments_by_tag(word, numberOfPost):
     medias = agent.get_media(obj=tag, count = numberOfPost ) #get tuple with post identifiers and tag identifier
     counter = 0
     for media in medias[0]:
+        comments = ""
         post = agent.update(obj=Media(media))#get post with comments
-        if post["edge_media_to_comment"]["edges"] != []:
+        for t in post["edge_media_to_comment"]["edges"]:
+            comment = str(t["node"]["text"]) #create str from comments
+            comment = preprocess_text(comment)
+            if comment != "":
+                comments += (comment + "\n")
+        if comments != "":
             counter += 1
-            comments = ""
             with open("{}/{}.txt".format(word, media), "w", encoding = "utf-8", ) as f:
-                for t in post["edge_media_to_comment"]["edges"]:
-                    comment = str(t["node"]["text"]) #create str from comment
-                    comment = preprocess_text(comment)
-                    if comment != "":
-                        comments = (comment + "\n")
-                    f.write(comments)
-                    if comments == "": 
-                        f.close()
-                        os.remove("{}/{}.txt".format(word, media))
-                        counter -= 1
+                f.write(comments)
 
     return counter
 
 #get_comments_by_tag("гальваника", 10)
-print(get_comments_by_tag("гальваника", 10))
+print(get_comments_by_tag("гальваника", 50))
