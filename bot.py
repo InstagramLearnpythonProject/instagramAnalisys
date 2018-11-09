@@ -1,8 +1,12 @@
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+# -*- coding: utf-8 -*-
+import os 
 import logging
 
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
-PROXY = {'proxy_url': 'socks5://t1.learn.python.ru:1080',
+from get_hashtag import get_comments_by_tag
+
+PROXY = {#'proxy_url': 'socks5://t1.learn.python.ru:1080',
 
 'urllib3_proxy_kwargs': {'username': 'learn', 'password': 'python'}}
 
@@ -18,38 +22,28 @@ def greet_user(bot, update):
     logging.info(text)
     update.message.reply_text(text)
 
-def find_post(bot, update):
-    bot.send_message(chat_id=update.message.chat_id, text = 'Введите хэштег')
-    # Получаем вводные данные
-    hashtag = input(getattr ("Введите хештег (без #): "))
-    amount = int(input(getattr ("Введите количество публикаций по хештегу: ")))
-    print(' ')
-    # Получаем список хештегов
-    h = bot.get_total_hashtag_medias(hashtag, amount=amount, filtration=False)
-    # Удаляем повторяющиеся элементы
-    posts = list(set(h))
+def find_post(bot, update):    
+    
+    counter = get_comments_by_tag(update.message.text, 50)
+    
+    bot.send_message(chat_id=update.message.chat_id, text = 'Вы только что ввели хештег')
+    bot.send_message(chat_id=update.message.chat_id, text = 'Количество постов по вашему хештегу = %s'%counter)
 
-def sent(bot, update):
-    data = []
-    for i in open("hashtags.txt"):
-        data.append(i)
-    print(data)
-
-    for i in range(len(data)):
-        
-
-
+    bot.send_message(chat_id=update.message.chat_id, text = 'Файлы с описаниями постов:')        
+    for one in os.listdir(update.message.text):        
+        print(os.path.join(update.message.text, one))        
+        document = open(os.path.join(update.message.text, one), 'r').read()              
+        bot.send_message(chat_id=update.message.chat_id, text = document) 
     
 
 def main():
     mybot = Updater("650028034:AAH-dqfS_nkiSA7DTLzpSihJKRz8aX3eGJg", request_kwargs=PROXY)
    
-
     logging.info('Обожемой, бот кому-то понадобился!')
 
     dp = mybot.dispatcher
-    dp.add_handler(CommandHandler('start', greet_user))
-    dp.add_handler(MessageHandler(Filters.text, talk_to_me))
+    dp.add_handler(CommandHandler('start', greet_user))    
+    dp.add_handler(MessageHandler(Filters.text, find_post))    
 
     mybot.start_polling()
     mybot.idle()
