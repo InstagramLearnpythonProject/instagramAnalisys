@@ -8,3 +8,6 @@ positive.csv
 textanalisys.py
 test.py
 гальваника
+tweets_model.w2v
+tweets_model.w2v.trainables.syn1neg.npy
+tweets_model.w2v.wv.vectors.npy

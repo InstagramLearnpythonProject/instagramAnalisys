@@ -39,5 +39,5 @@ def get_comments_by_tag(word, numberOfPost):
 
     return counter
 
-#get_comments_by_tag("гальваника", 10)
-print(get_comments_by_tag("гальваника", 50))
+if __name__='__main__':
+    print(get_comments_by_tag("гальваника", 100))
